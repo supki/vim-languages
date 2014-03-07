@@ -13,9 +13,10 @@ endfunction
 
 function! languages#pragma(language)
 	let l:n = line('.') + 1
+	let l:m = col('.')
 	let l:pragma = '{-# LANGUAGE ' . a:language . ' #-}'
 	silent 0put =l:pragma
-	silent execute l:n
+	call cursor(l:n, l:m)
 endfunction
 
 function! languages#generate(filter)
