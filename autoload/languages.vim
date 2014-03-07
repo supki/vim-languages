@@ -12,10 +12,19 @@ function! s:add_command(language)
 endfunction
 
 function! languages#pragma(language)
+	let l:pragma = '{-# LANGUAGE ' . a:language . ' #-}'
 	let l:n = line('.') + 1
 	let l:m = col('.')
-	let l:pragma = '{-# LANGUAGE ' . a:language . ' #-}'
-	silent 0put =l:pragma
+	let l:t = 1
+	for l:line in getline(1, line('$'))
+		if l:line =~ '{-# LANGUAGE' && l:line < l:pragma
+			let l:t += 1
+		else
+			break
+		endif
+	endfor
+	call cursor(l:t, 1)
+	silent put! =l:pragma
 	call cursor(l:n, l:m)
 endfunction
 
