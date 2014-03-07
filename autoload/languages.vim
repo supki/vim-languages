@@ -8,8 +8,14 @@ if !exists("g:vim_languages_default_filter")
 endif
 
 function! s:add_command(language)
-	execute "command! " . a:language .
-		\ " let n = line('.') + 1 | 0put ='{-# LANGUAGE " . a:language . " #-}' | execute n"
+	execute "command! " . a:language .  " call languages#pragma('" . a:language . "')"
+endfunction
+
+function! languages#pragma(language)
+	let l:n = line('.') + 1
+	let l:pragma = '{-# LANGUAGE ' . a:language . ' #-}'
+	silent 0put =l:pragma
+	silent execute l:n
 endfunction
 
 function! languages#generate(filter)

@@ -1,4 +1,4 @@
-# vim-language
+# vim-languages
 
 This is a very simple plugin automatically generating vim commands to add
 Haskell language extension pragmas at the top of the file. Different GHC versions support different
