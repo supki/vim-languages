@@ -8,8 +8,8 @@ if !exists("g:vim_languages_default_filter")
 endif
 
 function! s:add_command(language)
-	execute 'command! ' . a:language .
-		\ ' exe "normal! ggO0C{-# LANGUAGE ' . a:language . ' #-}``"'
+	execute "command! " . a:language .
+		\ " let n = line('.') + 1 | 0put ='{-# LANGUAGE " . a:language . " #-}' | execute n"
 endfunction
 
 function! languages#generate(filter)
