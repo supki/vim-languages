@@ -32,3 +32,6 @@ will add
 
 _Note_ that the plugin expects you to have all your LANGUAGE pragmas as one big block
 at the top of the file; that is before any comments, or OPTIONS_GHC pragmas, or whatever
+
+
+![Screencast](asset/screencast.gif)
