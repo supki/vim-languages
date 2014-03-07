@@ -15,7 +15,7 @@ switch exists since at least GHC 7.6. To use the plugin add
 call languages#generate(g:vim_languages_default_filter)
 ```
 
-line to your ~/.vimrc. The argument to `languages#generate` is a Vim regular expression to filter
+line to ~/.vimrc. The argument to `languages#generate` is a Vim regular expression to filter
 language extensions. With the default filter the plugin generates commands for
 `-XNoMonomorphismRestriction`, for `-XNoImplicitPrelude`, and for all other extensions
 not starting with `-XNo`. Command name is the name of the extension, so
@@ -29,3 +29,6 @@ will add
 ```haskell
 {-# LANGUAGE RankNTypes #-}
 ```
+
+_Note_ that the plugin expects you to have all your LANGUAGE pragmas as one big block
+at the top of the file; that is before any comments, or OPTIONS_GHC pragmas, or whatever
