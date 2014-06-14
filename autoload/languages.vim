@@ -20,7 +20,8 @@ function! languages#pragma(language)
 		if l:line =~ '^#' || l:line =~ '^--'
 			let l:t += 1
 		else
-			if (l:line =~ '^{-# LANGUAGE' && l:line < l:pragma)
+			if a:language != 'CPP' &&
+					\ (l:line == '{-# LANGUAGE CPP #-}' || (l:line =~ '^{-# LANGUAGE' && l:line < l:pragma))
 				let l:t += 1
 			elseif l:line == l:pragma
 				call cursor(l:t, 1)
