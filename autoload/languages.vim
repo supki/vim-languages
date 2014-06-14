@@ -17,18 +17,22 @@ function! languages#pragma(language)
 	let l:m = col('.')
 	let l:t = 1
 	for l:line in getline(1, line('$'))
-		if l:line =~ '^#' || (l:line =~ '^{-# LANGUAGE' && l:line < l:pragma)
+		if l:line =~ '^#' || l:line =~ '^--'
 			let l:t += 1
-		elseif l:line == l:pragma
-			call cursor(l:t, 1)
-			silent delete
-			call cursor(l:n - 1, l:m)
-			break
 		else
-			call cursor(l:t, 1)
-			silent put! =l:pragma
-			call cursor(l:n + 1, l:m)
-			break
+			if (l:line =~ '^{-# LANGUAGE' && l:line < l:pragma)
+				let l:t += 1
+			elseif l:line == l:pragma
+				call cursor(l:t, 1)
+				silent delete
+				call cursor(l:n - 1, l:m)
+				break
+			else
+				call cursor(l:t, 1)
+				silent put! =l:pragma
+				call cursor(l:n + 1, l:m)
+				break
+			endif
 		endif
 	endfor
 endfunction
