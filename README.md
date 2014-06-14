@@ -1,24 +1,25 @@
 # vim-languages
 
-This is a very simple plugin automatically generating vim commands to add
-Haskell language extension pragmas at the top of the file. Different GHC versions support different
-extensions, so the output of
+This is a very simple plugin that automatically generates vim commands to add or remove
+Haskell language extension pragmas.  Different GHC versions support different extensions,
+so the output of
 
 ```sh
 $ ghc --supported-languages
 ```
 
-is used to determine which commands to generate. It should be fairly robust; `--supported-languages`
-switch exists since at least GHC 7.6. To use the plugin add
+is used to determine which commands to generate.  It should be fairly robust: `--supported-languages`
+switch exists since at least GHC 7.6.  The plugin supports [pathogen][vim-pathogen], so
+to install it you can just do
 
-```vim
-call languages#generate(g:vim_languages_default_filter)
+```sh
+cd ~/.vim/bundle && git clone git@github.com/supki/vim-languages
 ```
 
-line to ~/.vimrc. The argument to `languages#generate` is a Vim regular expression to filter
-language extensions. With the default filter the plugin generates commands for
-`-XNoMonomorphismRestriction`, for `-XNoImplicitPrelude`, and for all other extensions
-not starting with `-XNo`. Command name is the name of the extension, so
+and be done.  By default commands for `-XNoMonomorphismRestriction`, for `-XNoImplicitPrelude`,
+and for all other extensions not starting with `-XNo` are generated.  If you are not happy
+with the defaults, please modify `g:vim_languages_filter` variable to your favorite regex.
+The generated command name is the name of the extension, so
 
 ```vim
 :RankNTypes
@@ -30,8 +31,14 @@ will add
 {-# LANGUAGE RankNTypes #-}
 ```
 
-_Note_ that the plugin expects you to have all your LANGUAGE pragmas as one big block
-at the top of the file; that is before any comments, or OPTIONS_GHC pragmas, or whatever
+Another call to `RankNTypes` will remove the pragma.
+
+_Note_ that the plugin expects the file to have all LANGUAGE pragmas as one big block
+at the top; it tolerates the single line comment syntax and pre-processor instructions
+but nothing else (e.g. OPTIONS_GHC pragmas interspersed in the list of LANGUAGE pragmas
+will break everything)
 
 
 ![Screencast](asset/screencast.gif)
+
+  [vim-pathogen]: https://github.com/tpope/vim-pathogen
