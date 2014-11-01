@@ -3,8 +3,12 @@ if exists('g:vim_languages_loaded') && g:vim_languages_loaded
 endif
 let g:vim_languages_loaded = 1
 
-if !exists("g:vim_languages_filter")
-	let g:vim_languages_filter = '^\(NoMonomorphismRestriction\|NoImplicitPrelude\|\(^No\)\@!\)'
+if !exists("g:vim_languages_exclude")
+	let g:vim_languages_exclude = ['Rank2Types', 'NPlusKPatterns']
+endif
+
+if !exists("g:vim_languages_include")
+	let g:vim_languages_include = ['NoImplicitPrelude', 'NoMonomorphismRestriction']
 endif
 
 function! s:add_command(language)
@@ -38,12 +42,12 @@ function! languages#pragma(language)
 	endfor
 endfunction
 
-function! languages#generate(filter)
+function! languages#generate()
 	for l:language in split(system("ghc --supported-languages"), "\n")
-		if l:language =~ a:filter
+		if ! (l:language =~ '^No' || index(g:vim_languages_exclude, l:language) != -1) || index(g:vim_languages_include, l:language) != -1
 			call s:add_command(l:language)
 		endif
 	endfor
 endfunction
 
-call languages#generate(g:vim_languages_filter)
+call languages#generate()

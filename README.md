@@ -1,25 +1,26 @@
 # vim-languages
 
-This is a very simple plugin that automatically generates vim commands to add or remove
-Haskell language extension pragmas.  Different GHC versions support different extensions,
-so the output of
+This is a very simple plugin that generates Vim commands to add or remove the extension
+pragmas.  Different GHC versions support different extensions, so the output of
 
 ```sh
 $ ghc --supported-languages
 ```
 
-is used to determine which commands to generate.  It should be fairly robust: `--supported-languages`
+is used to determine what commands to generate.  It should be fairly robust: `--supported-languages`
 switch exists since at least GHC 7.6.  The plugin supports [pathogen][vim-pathogen], so
-to install it you can just do
+to install it just run:
 
 ```sh
-cd ~/.vim/bundle && git clone git@github.com/supki/vim-languages
+mkdir -p ~/.vim/bundle && cd ~/.vim/bundle && git clone git@github.com:supki/vim-languages
 ```
 
-and be done.  By default commands for `-XNoMonomorphismRestriction`, for `-XNoImplicitPrelude`,
-and for all other extensions not starting with `-XNo` are generated.  If you are not happy
-with the defaults, please modify `g:vim_languages_filter` variable to your favorite regex.
-The generated command name is the name of the extension, so
+By default, the commands for the following extensions are generated:
+
+  - `NoImplicitPrelude`, `NoMonomorphismRestriction`
+  - Any extension that does not have `No` prefix but `Rank2Types` and `NPlusKPatterns`
+
+The command name is the name of the extension, so
 
 ```vim
 :RankNTypes
@@ -31,7 +32,17 @@ will add
 {-# LANGUAGE RankNTypes #-}
 ```
 
-Another call to `RankNTypes` will remove the pragma.
+Another call to `:RankNTypes` will remove the pragma.
+
+The list of commands to generate is customizable:
+
+  - Add `let g:vim_languages_exclude = ['Rank2Types', 'NPlusKPatterns', ...]` line to
+    your `~/.vimrc` to exclude more commands from being generated
+
+  - Add `let g:vim_languages_include = ['NoImplicitPrelude', 'NoMonomorphismRestriction]`
+    line to your `~/.vimrc` to generate more commands
+
+  - Inclusion has a higher precedence
 
 _Note_ that the plugin expects the file to have all LANGUAGE pragmas as one big block
 at the top; it tolerates the single line comment syntax and pre-processor instructions
