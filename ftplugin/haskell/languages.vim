@@ -21,9 +21,12 @@ function! languages#pragma(language)
 	let l:m = col('.')
 	let l:t = 1
 	for l:line in getline(1, line('$'))
+		" CPP directives and non-Haddock comments are ignored.
 		if l:line =~ '^#' || (l:line =~ '^--' && ! (l:line =~ '^-- |'))
 			let l:t += 1
 		else
+			" CPP is always the first pragma as it can influence the
+			" inclusion of other pragmas.
 			if a:language != 'CPP' &&
 					\ (l:line == '{-# LANGUAGE CPP #-}' || (l:line =~ '^{-# LANGUAGE' && l:line < l:pragma))
 				let l:t += 1
