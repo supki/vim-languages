@@ -21,7 +21,7 @@ function! languages#pragma(language)
 	let l:m = col('.')
 	let l:t = 1
 	for l:line in getline(1, line('$'))
-		if l:line =~ '^#' || l:line =~ '^--'
+		if l:line =~ '^#' || (l:line =~ '^--' && ! (l:line =~ '^-- |'))
 			let l:t += 1
 		else
 			if a:language != 'CPP' &&
