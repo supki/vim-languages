@@ -4,7 +4,14 @@ endif
 let g:vim_languages_loaded = 1
 
 if !exists("g:vim_languages_exclude")
-	let g:vim_languages_exclude = ['Rank2Types', 'NPlusKPatterns']
+	let g:vim_languages_exclude =
+		\ [ 'DatatypeContexts'
+		\ , 'DoRec'
+		\ , 'NPlusKPatterns'
+		\ , 'OverlappingInstances'
+		\ , 'RecordPuns'
+		\ , 'Rank2Types'
+		\ ]
 endif
 
 if !exists("g:vim_languages_include")
