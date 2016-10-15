@@ -15,7 +15,10 @@ if !exists("g:vim_languages_exclude")
 endif
 
 if !exists("g:vim_languages_include")
-	let g:vim_languages_include = ['NoImplicitPrelude', 'NoMonomorphismRestriction']
+	let g:vim_languages_include =
+		\ [ 'NoImplicitPrelude'
+		\ , 'NoMonomorphismRestriction'
+		\ ]
 endif
 
 function! s:add_command(language)
@@ -54,7 +57,7 @@ endfunction
 
 function! languages#generate()
 	for l:language in split(system("ghc --supported-languages"), "\n")
-		if ! (l:language =~ '^No' || index(g:vim_languages_exclude, l:language) != -1) || index(g:vim_languages_include, l:language) != -1
+		if ! (l:language =~ '^No\u' || index(g:vim_languages_exclude, l:language) != -1) || index(g:vim_languages_include, l:language) != -1
 			call s:add_command(l:language)
 		endif
 	endfor
