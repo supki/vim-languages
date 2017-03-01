@@ -56,7 +56,12 @@ function! languages#pragma(language)
 endfunction
 
 function! languages#generate()
-	for l:language in split(system("ghc --supported-languages"), "\n")
+	if executable("stack") > 0 && filereadable("stack.yaml")
+		let l:ghc = "stack exec -- ghc"
+	else
+		let l:ghc = "ghc"
+	endif
+	for l:language in split(system(l:ghc . " --supported-languages"), "\n")
 		if ! (l:language =~ '^No\u' || index(g:vim_languages_exclude, l:language) != -1) || index(g:vim_languages_include, l:language) != -1
 			call s:add_command(l:language)
 		endif
