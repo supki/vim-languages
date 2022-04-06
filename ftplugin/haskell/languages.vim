@@ -57,7 +57,11 @@ endfunction
 
 function! languages#generate()
 	if executable("stack") > 0 && filereadable("stack.yaml")
-		let l:ghc = "stack exec -- ghc"
+		if filereadable("shell.nix")
+			let l:ghc = "stack --no-nix --system-ghc --no-install-ghc exec -- ghc"
+		else
+			let l:ghc = "stack exec -- ghc"
+		endif
 	else
 		let l:ghc = "ghc"
 	endif
