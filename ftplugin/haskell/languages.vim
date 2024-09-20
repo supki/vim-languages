@@ -17,7 +17,8 @@ endif
 
 if !exists("g:vim_languages_include")
 	let g:vim_languages_include =
-		\ [ 'NoImplicitPrelude'
+		\ [ 'NoFieldSelectors'
+		\ , 'NoImplicitPrelude'
 		\ , 'NoMonomorphismRestriction'
 		\ ]
 endif
