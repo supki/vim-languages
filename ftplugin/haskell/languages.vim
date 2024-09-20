@@ -7,6 +7,7 @@ if !exists("g:vim_languages_exclude")
 	let g:vim_languages_exclude =
 		\ [ 'DatatypeContexts'
 		\ , 'DoRec'
+		\ , 'GeneralisedNewtypeDeriving'
 		\ , 'NPlusKPatterns'
 		\ , 'OverlappingInstances'
 		\ , 'RecordPuns'
