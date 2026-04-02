@@ -67,7 +67,7 @@ function! languages#generate()
   else
     let l:ghc = "ghc"
   endif
-  for l:language in split(system(l:ghc . " --supported-languages"), "\n")
+  for l:language in split(system(l:ghc . " --supported-languages 2>/dev/null"), "\n")
     if ! (l:language =~ '^No\u' || index(g:vim_languages_exclude, l:language) != -1) || index(g:vim_languages_include, l:language) != -1
       call s:add_command(l:language)
     endif
